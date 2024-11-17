@@ -1,6 +1,7 @@
 import { Container } from "./styles";
 import { coinGeckoInstance } from "../../api/coingecko";
 import { useEffect, useState } from "react";
+import { all } from "axios";
 
 export const Content = () =>{
 
@@ -22,7 +23,7 @@ export const Content = () =>{
                         include_24hr_vol: true,
                         include_24hr_change: true,
                         include_last_updated_at: true,
-                        precision: 2
+                        precision: 'full'
                     }
                 });
                 setCoinGeckoData(response.data)
@@ -40,7 +41,9 @@ export const Content = () =>{
 
     let dollarFormat = new Intl.NumberFormat('en-US', {
         style: 'currency',
-        currency: 'USD'
+        currency: 'USD',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 5
     })
 
     return (
