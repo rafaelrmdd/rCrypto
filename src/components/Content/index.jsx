@@ -43,8 +43,6 @@ export const Content = () =>{
         currency: 'USD'
     })
 
-    console.log(coinGeckoData, coinIdsList);
-
     return (
         <Container>
             <form 
