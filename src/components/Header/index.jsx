@@ -1,16 +1,18 @@
 import { Container } from "./styles"
+import { HiOutlineCurrencyDollar } from "react-icons/hi2";
+
 
 export const Header = () => {
     return (
         <Container>
             <header>
-                <span>Logo</span>
+                <HiOutlineCurrencyDollar/>
 
                 <nav>
-                    <a href="/">Cryptocurrencies</a>
+                    <h1>rCrypto</h1>
                 </nav>
 
-                Dark-mode
+                <span></span>
             </header>
         </Container>
     )

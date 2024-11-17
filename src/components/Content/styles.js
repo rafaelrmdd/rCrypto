@@ -8,7 +8,35 @@ export const Container = styled.div`
     margin: 2rem auto;
     padding: 0 0.9rem;
 
-    
+    form{
+        margin-bottom: 1.5rem;
+
+        input{
+            padding: 0.3rem;
+            width: 200px;
+            line-height: 1rem;
+
+            outline: 0;
+            border: 0;
+            border-radius: 3px;
+            background: var(--blue-100);
+        }
+
+        button{
+            margin-left: 0.5rem;
+            padding: 0.3rem;
+            line-height: 1rem;
+            font-size: 0.7rem;
+            
+            outline: 0;
+            border: 0;
+            border-radius: 3px;
+
+            background: var(--blue-100);
+
+        }
+
+    }
 
     .table-index{
         width: 100%;

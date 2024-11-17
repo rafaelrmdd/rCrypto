@@ -5,13 +5,18 @@ import { useEffect, useState } from "react";
 export const Content = () =>{
 
     const [coinGeckoData, setCoinGeckoData] = useState([]);
+    const [coinIdsList, setCoinIdsList] = useState([]);
+    const [inputValue, setInputValue] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
             try {
+                const defaultCoins = ['bitcoin', 'ethereum'];
                 const response = await coinGeckoInstance.get('/simple/price', {
                     params: {
-                        ids: 'bitcoin,dogecoin,ethereum,solana,cardano',
+                        /*Formats the array of cryptocurrencies to a string because
+                         the API doesn't accept array as a parameter*/
+                        ids: [...defaultCoins, ...coinIdsList].join(','),
                         vs_currencies: 'usd',
                         include_market_cap: true,
                         include_24hr_vol: true,
@@ -31,12 +36,42 @@ export const Content = () =>{
         const interval = setInterval(fetchData, 5 * 60 * 1000);
         return () => clearInterval(interval);
         
-    }, [])
-    
-        
-    console.log(coinGeckoData);
+    }, [coinIdsList])
+
+    let dollarFormat = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+    })
+
+    console.log(coinGeckoData, coinIdsList);
+
     return (
         <Container>
+            <form 
+                onSubmit={(e) =>{
+                        e.preventDefault()
+                        //Adds the value to the cryptocurrencies list only when submited  
+                        setCoinIdsList([...coinIdsList, inputValue])
+                        //Resets the forms value when submited
+                        setInputValue('')
+                    }
+                } 
+            >
+
+                <input 
+                    type="text" 
+                    placeholder="Ex: bitcoin"
+                    value={inputValue}
+                    onClick={(e) => e.preventDefault()}
+                    /*Grabs each new letter and sets it. Because the 'setInputValue' is not an array
+                    so it won't be an array full of repeated characters
+                    */ 
+                    onChange={(e) => setInputValue(e.target.value)}
+                />
+                <button type="submit">Add Cryptocurrency
+                </button>
+            </form>
+            
             <table className="table-index">
                 <tr>
                     <th>Name</th>
@@ -56,9 +91,9 @@ export const Content = () =>{
                 {coinGeckoData && Object.keys(coinGeckoData).map((cryptoName) => (
                     <tr key={cryptoName}>
                         <td>{cryptoName}</td>
-                        <td>{`${coinGeckoData[cryptoName].usd}`}</td>
-                        <td>{`${coinGeckoData[cryptoName].usd_market_cap}`}</td>
-                        <td>{`${coinGeckoData[cryptoName].usd_24h_vol}`}</td>
+                        <td>{dollarFormat.format(`${coinGeckoData[cryptoName].usd}`)}</td>
+                        <td>{dollarFormat.format(`${coinGeckoData[cryptoName].usd_market_cap}`)}</td>
+                        <td>{dollarFormat.format(`${coinGeckoData[cryptoName].usd_24h_vol}`)}</td>
                     </tr>
                 ))}
             </table>

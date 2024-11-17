@@ -32,15 +32,16 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     body{
-        color: var(--orange);
+        color: #2D5A76;
         font-family: 'Poppins', sans-serif;
 
         background: var(--blue-50);
 
     }
 
-    a, input, span{
-        color: var(--white);
+    a, input, span, button{
+        color: #2D5A76;
+        font-family: 'Poppins', sans-serif;
     }
 
     a{
