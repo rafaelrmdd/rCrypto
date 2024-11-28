@@ -1,7 +1,6 @@
 import { Container } from "./styles";
 import { coinGeckoInstance } from "../../api/coingecko";
 import { useEffect, useState } from "react";
-import { all } from "axios";
 
 export const Content = () =>{
 
